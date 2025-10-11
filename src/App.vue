@@ -1,5 +1,8 @@
 <script setup></script>
 
 <template>
-  <h1>Weather App - Frontend Mentor</h1>
+  <header>
+    <img src="@/assets/images/logo.svg" alt="Logo" />
+  </header>
+  <h1>How's the sky looking today?</h1>
 </template>
