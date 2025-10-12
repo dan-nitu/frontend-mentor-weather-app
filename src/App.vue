@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import Button from './components/Button.vue'
+import InputWithIcon from './components/InputWithIcon.vue'
 
 const location = ref('')
 const city = ref('')
@@ -31,10 +32,13 @@ const getWeather = async () => {
   <h1>How's the sky looking today?</h1>
 
   <form @submit.prevent="getWeather">
-    <div class="input-with-icon">
-      <label for="search" class="icon search"></label>
-      <input id="search" type="text" v-model="location" placeholder="Search for a place..." />
-    </div>
+    <InputWithIcon
+      :id="'search'"
+      :type="'text'"
+      :placeholder="'Search for a place...'"
+      v-model="location"
+    />
+
     <Button :type="'submit'" :buttonText="'Search'" />
   </form>
 
