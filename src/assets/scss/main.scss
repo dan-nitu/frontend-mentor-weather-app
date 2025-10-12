@@ -124,13 +124,42 @@ button {
   border-radius: 10px;
 }
 
+.extra-details {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+
+  > * {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .title {
+    color: $neutral-300;
+  }
+  .value {
+    color: $neutral-200;
+    font-size: 1.75rem;
+  }
+}
+
+.card {
+  background-color: $neutral-700;
+  border-radius: 12px;
+  padding: 1rem;
+
+  &.main-results {
+    background-image: url('/src/assets/images/bg-today-small.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 24px;
+    padding: 2rem 1rem;
+  }
+}
+
 .main-results {
-  background-image: url('/src/assets/images/bg-today-small.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 24px;
-  padding: 2rem 1rem;
   margin-block: 2rem;
   text-align: center;
 

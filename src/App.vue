@@ -14,6 +14,11 @@ const temperature = ref('')
 const latitude = ref('')
 const longitude = ref('')
 
+const feelsLike = ref('')
+const humidity = ref('')
+const wind = ref('')
+const precipitation = ref('')
+
 const weatherCodeMap = {
   0: 'sunny', // Clear sky
   1: 'partly-cloudy', // Mainly clear
@@ -64,7 +69,7 @@ const getWeather = async () => {
   } finally {
     try {
       const response =
-        await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode
+        await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,apparent_temperature_max,relative_humidity_2m_max,wind_speed_10m_max,precipitation_sum
 `)
 
       // Get the today date and format it
@@ -79,6 +84,11 @@ const getWeather = async () => {
       weatherIcon.value = weatherCodeMap[weatherCode]
 
       temperature.value = Math.trunc(response.data.daily.temperature_2m_max[0])
+
+      feelsLike.value = Math.trunc(response.data.daily.apparent_temperature_max[0])
+      humidity.value = Math.trunc(response.data.daily.relative_humidity_2m_max[0])
+      wind.value = Math.trunc(response.data.daily.wind_speed_10m_max[0])
+      precipitation.value = Math.trunc(response.data.daily.precipitation_sum[0])
     } catch (error) {
       console.log(error)
     }
@@ -111,6 +121,25 @@ const getWeather = async () => {
     <div class="summary">
       <img :src="`/src/assets/images/icon-${weatherIcon}.webp`" alt="`${weatherIcon}-icon`" />
       <div class="temperature">{{ temperature }}°</div>
+    </div>
+  </div>
+
+  <div class="extra-details">
+    <div class="card">
+      <div class="title">Feels Like</div>
+      <div class="value">{{ feelsLike }}°</div>
+    </div>
+    <div class="card">
+      <div class="title">Humidity</div>
+      <div class="value">{{ humidity }}%</div>
+    </div>
+    <div class="card">
+      <div class="title">Wind</div>
+      <div class="value">{{ wind }} km/h</div>
+    </div>
+    <div class="card">
+      <div class="title">Precipitation</div>
+      <div class="value">{{ precipitation }} mm</div>
     </div>
   </div>
 </template>
