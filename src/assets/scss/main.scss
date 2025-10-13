@@ -52,6 +52,7 @@ html {
 body {
   max-width: 1440px;
   padding: 1rem;
+  margin: 0;
 }
 
 h1 {
@@ -186,6 +187,33 @@ button {
       font-style: italic;
       font-weight: 700;
       font-size: 5rem;
+    }
+  }
+}
+
+.daily-forecast {
+  margin-top: 2rem;
+
+  .cards-wrapper {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+
+    .card {
+      text-align: center;
+      padding-inline: 0.5rem;
+
+      img {
+        margin-block: 0.5rem;
+        max-width: 4rem;
+        width: 100%;
+      }
+
+      .temperatures {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }

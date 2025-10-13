@@ -19,6 +19,8 @@ const humidity = ref('')
 const wind = ref('')
 const precipitation = ref('')
 
+const weeklyWeather = ref([])
+
 const weatherCodeMap = {
   0: 'sunny', // Clear sky
   1: 'partly-cloudy', // Mainly clear
@@ -89,6 +91,24 @@ const getWeather = async () => {
       humidity.value = Math.trunc(response.data.daily.relative_humidity_2m_max[0])
       wind.value = Math.trunc(response.data.daily.wind_speed_10m_max[0])
       precipitation.value = Math.trunc(response.data.daily.precipitation_sum[0])
+
+      // Get the data for the daily forecast
+      const daily = response.data.daily
+
+      weeklyWeather.value = daily.time.map((dateStr, index) => {
+        const day = new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short' })
+
+        return {
+          day,
+          weatherCode: daily.weathercode[index],
+          weatherIcon: weatherCodeMap[daily.weathercode[index]],
+          tempMin: Math.trunc(daily.temperature_2m_min[index]),
+          tempMax: Math.trunc(daily.temperature_2m_max[index]),
+        }
+      })
+
+      console.log('weeklyWeather')
+      console.log(weeklyWeather)
     } catch (error) {
       console.log(error)
     }
@@ -140,6 +160,21 @@ const getWeather = async () => {
     <div class="card">
       <div class="title">Precipitation</div>
       <div class="value">{{ precipitation }} mm</div>
+    </div>
+  </div>
+
+  <div class="daily-forecast">
+    <div>Daily forecast</div>
+
+    <div class="cards-wrapper">
+      <div class="card" v-for="daily in weeklyWeather" :key="daily.day">
+        <div class="day">{{ daily.day }}</div>
+        <img :src="`/src/assets/images/icon-${daily.weatherIcon}.webp`" :alt="daily.weatherIcon" />
+        <div class="temperatures">
+          <span>{{ daily.tempMax }}°</span>
+          <span>{{ daily.tempMin }}°</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
