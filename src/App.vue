@@ -1,6 +1,10 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+
+import TheHeader from './components/TheHeader.vue'
+import ExtraDetails from './components/ExtraDetails.vue'
+
 import Button from './components/Button.vue'
 import InputWithIcon from './components/InputWithIcon.vue'
 
@@ -117,10 +121,7 @@ const getWeather = async () => {
 </script>
 
 <template>
-  <!-- @TODO Header -->
-  <header>
-    <img src="@/assets/images/logo.svg" alt="Logo" />
-  </header>
+  <TheHeader />
 
   <h1>How's the sky looking today?</h1>
 
@@ -144,24 +145,12 @@ const getWeather = async () => {
     </div>
   </div>
 
-  <div class="extra-details">
-    <div class="card">
-      <div class="title">Feels Like</div>
-      <div class="value">{{ feelsLike }}°</div>
-    </div>
-    <div class="card">
-      <div class="title">Humidity</div>
-      <div class="value">{{ humidity }}%</div>
-    </div>
-    <div class="card">
-      <div class="title">Wind</div>
-      <div class="value">{{ wind }} km/h</div>
-    </div>
-    <div class="card">
-      <div class="title">Precipitation</div>
-      <div class="value">{{ precipitation }} mm</div>
-    </div>
-  </div>
+  <ExtraDetails
+    :feelsLike="feelsLike"
+    :humidity="humidity"
+    :wind="wind"
+    :precipitation="precipitation"
+  />
 
   <div class="daily-forecast">
     <div>Daily forecast</div>

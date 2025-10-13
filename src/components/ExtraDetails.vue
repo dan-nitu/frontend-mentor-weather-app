@@ -1,0 +1,31 @@
+<script setup>
+import { defineProps } from 'vue'
+
+defineProps({
+  feelsLike: { type: Number, default: '' },
+  humidity: { type: Number, default: '' },
+  wind: { type: Number, default: '' },
+  precipitation: { type: Number, default: '' },
+})
+</script>
+
+<template>
+  <div class="extra-details">
+    <div class="card">
+      <div class="title">Feels Like</div>
+      <div class="value">{{ feelsLike }}°</div>
+    </div>
+    <div class="card">
+      <div class="title">Humidity</div>
+      <div class="value">{{ humidity }}%</div>
+    </div>
+    <div class="card">
+      <div class="title">Wind</div>
+      <div class="value">{{ wind }} km/h</div>
+    </div>
+    <div class="card">
+      <div class="title">Precipitation</div>
+      <div class="value">{{ precipitation }} mm</div>
+    </div>
+  </div>
+</template>
