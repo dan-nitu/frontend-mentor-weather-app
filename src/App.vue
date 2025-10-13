@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 import TheHeader from './components/TheHeader.vue'
 import ExtraDetails from './components/ExtraDetails.vue'
+import DailyForecast from './components/DailyForecast.vue'
 
 import Button from './components/Button.vue'
 import InputWithIcon from './components/InputWithIcon.vue'
@@ -110,9 +111,6 @@ const getWeather = async () => {
           tempMax: Math.trunc(daily.temperature_2m_max[index]),
         }
       })
-
-      console.log('weeklyWeather')
-      console.log(weeklyWeather)
     } catch (error) {
       console.log(error)
     }
@@ -152,18 +150,5 @@ const getWeather = async () => {
     :precipitation="precipitation"
   />
 
-  <div class="daily-forecast">
-    <div>Daily forecast</div>
-
-    <div class="cards-wrapper">
-      <div class="card" v-for="daily in weeklyWeather" :key="daily.day">
-        <div class="day">{{ daily.day }}</div>
-        <img :src="`/src/assets/images/icon-${daily.weatherIcon}.webp`" :alt="daily.weatherIcon" />
-        <div class="temperatures">
-          <span>{{ daily.tempMax }}°</span>
-          <span>{{ daily.tempMin }}°</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <DailyForecast :weeklyWeather="weeklyWeather" />
 </template>
