@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 import TheHeader from './components/TheHeader.vue'
+import MainWeatherCard from './components/MainWeatherCard.vue'
 import ExtraDetails from './components/ExtraDetails.vue'
 import DailyForecast from './components/DailyForecast.vue'
 
@@ -134,14 +135,13 @@ const getWeather = async () => {
     <Button :type="'submit'" :buttonText="'Search'" />
   </form>
 
-  <div class="main-results card">
-    <div class="location">{{ city }}, {{ country }}</div>
-    <div class="date">{{ today }}</div>
-    <div class="summary">
-      <img :src="`/src/assets/images/icon-${weatherIcon}.webp`" alt="`${weatherIcon}-icon`" />
-      <div class="temperature">{{ temperature }}°</div>
-    </div>
-  </div>
+  <MainWeatherCard
+    :city="city"
+    :country="country"
+    :today="today"
+    :weatherIcon="weatherIcon"
+    :temperature="temperature"
+  />
 
   <ExtraDetails
     :feelsLike="feelsLike"
