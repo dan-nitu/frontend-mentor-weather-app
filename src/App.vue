@@ -13,6 +13,7 @@ const weatherData = ref('')
 
 const handleWeatherData = (data) => {
   weatherData.value = data
+  console.log('hourlyWeather')
   console.log(weatherData)
 }
 </script>
@@ -42,6 +43,6 @@ const handleWeatherData = (data) => {
 
     <DailyForecast :weeklyWeather="weatherData.weeklyWeather" />
 
-    <HourlyForecast />
+    <HourlyForecast :hourlyWeather="weatherData.hourlyWeather" />
   </template>
 </template>

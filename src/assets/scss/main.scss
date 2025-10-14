@@ -104,34 +104,56 @@ body {
 .hourly-forecast {
   margin-top: 2rem;
   background-color: $neutral-800;
+  padding-right: 0;
 
-  > div:first-child {
-    font-weight: 700;
-  }
+  .scroll-wrapper {
+    max-height: 30em;
+    overflow: auto;
+    padding-right: 1rem;
 
-  .cards-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1rem;
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      margin-block: 16px;
+    }
 
-    .card {
-      border: solid 1px $neutral-600;
-      background-color: $neutral-700;
+    &::-webkit-scrollbar-thumb {
+      background: $neutral-800;
+    }
 
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: $neutral-800;
+
+    .cards-wrapper {
       display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
 
-      border-radius: 8px;
+      .card {
+        border: solid 1px $neutral-600;
+        background-color: $neutral-700;
 
-      > div {
         display: flex;
-        align-items: center;
-      }
+        justify-content: space-between;
+        padding: 0.5rem 1rem 0.5rem 0.5rem;
 
-      img {
-        max-width: 2.5rem;
+        border-radius: 8px;
+
+        > div {
+          display: flex;
+          align-items: center;
+        }
+
+        .image-wrapper {
+          width: 3rem;
+          display: flex;
+        }
+
+        img {
+          width: 2.5rem;
+          margin-right: 1rem;
+        }
       }
     }
   }

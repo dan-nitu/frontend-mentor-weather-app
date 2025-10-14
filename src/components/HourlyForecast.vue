@@ -1,16 +1,29 @@
-<script setup></script>
+<script setup>
+import { defineProps } from 'vue'
+
+defineProps({
+  hourlyWeather: Array,
+})
+</script>
 
 <template>
   <section class="card hourly-forecast">
-    <div>Hourly forecast</div>
+    <div class="scroll-wrapper">
+      <div>Hourly forecast</div>
 
-    <div class="cards-wrapper">
-      <div class="card" v-for="value in 8">
-        <div>
-          <img src="/src/assets/images/icon-fog.webp" alt="" />
-          <span>3 PM</span>
+      <div class="cards-wrapper">
+        <div class="card" v-for="data in hourlyWeather[0].hours">
+          <div>
+            <div class="image-wrapper">
+              <img
+                :src="`/src/assets/images/icon-${data.weatherIcon}.webp`"
+                :alt="data.weatherIcon"
+              />
+            </div>
+            <span>{{ data.hour }}</span>
+          </div>
+          <div>{{ data.temperature }}°</div>
         </div>
-        <div>20°</div>
       </div>
     </div>
   </section>
