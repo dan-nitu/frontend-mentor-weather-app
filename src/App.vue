@@ -7,11 +7,13 @@ import GetWeatherForm from './components/GetWeatherForm.vue'
 import MainWeatherCard from './components/MainWeatherCard.vue'
 import ExtraDetails from './components/ExtraDetails.vue'
 import DailyForecast from './components/DailyForecast.vue'
+import HourlyForecast from './components/HourlyForecast.vue'
 
 const weatherData = ref('')
 
 const handleWeatherData = (data) => {
   weatherData.value = data
+  console.log(weatherData)
 }
 </script>
 
@@ -28,14 +30,18 @@ const handleWeatherData = (data) => {
       :country="weatherData.country"
       :today="weatherData.today"
       :weatherIcon="weatherData.weatherIcon"
-      :temperature="weatherData.temperature" />
+      :temperature="weatherData.temperature"
+    />
 
     <ExtraDetails
       :feelsLike="weatherData.feelsLike"
       :humidity="weatherData.humidity"
       :wind="weatherData.wind"
-      :precipitation="weatherData.precipitation" />
+      :precipitation="weatherData.precipitation"
+    />
 
-    <DailyForecast :weeklyWeather="weatherData.weeklyWeather"
-  /></template>
+    <DailyForecast :weeklyWeather="weatherData.weeklyWeather" />
+
+    <HourlyForecast />
+  </template>
 </template>
