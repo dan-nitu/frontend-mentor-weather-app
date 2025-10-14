@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="daily-forecast">
+  <section class="daily-forecast">
     <div>Daily forecast</div>
 
     <div class="cards-wrapper">
@@ -20,5 +20,5 @@ defineProps({
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>

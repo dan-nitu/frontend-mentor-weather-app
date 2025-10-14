@@ -1,0 +1,16 @@
+@use 'variables' as *;
+
+.card {
+  background-color: $neutral-700;
+  border-radius: 12px;
+  padding: 1rem;
+
+  &.main-results {
+    background-image: url('/src/assets/images/bg-today-small.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 24px;
+    padding: 2rem 1rem;
+  }
+}

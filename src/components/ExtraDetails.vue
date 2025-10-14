@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="extra-details">
+  <section class="extra-details">
     <div class="card">
       <div class="title">Feels Like</div>
       <div class="value">{{ feelsLike }}°</div>
@@ -27,5 +27,5 @@ defineProps({
       <div class="title">Precipitation</div>
       <div class="value">{{ precipitation }} mm</div>
     </div>
-  </div>
+  </section>
 </template>

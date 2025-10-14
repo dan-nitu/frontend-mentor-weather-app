@@ -1,0 +1,12 @@
+@use 'variables' as *;
+
+button {
+  cursor: pointer;
+  background-color: $blue-500;
+  color: $neutral-0;
+  border-color: transparent;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  padding: 14px;
+  border-radius: 10px;
+}

@@ -108,14 +108,16 @@ const getWeather = async () => {
 </script>
 
 <template>
-  <form @submit.prevent="getWeather">
-    <InputWithIcon
-      :id="'search'"
-      :type="'text'"
-      :placeholder="'Search for a place...'"
-      v-model="location"
-    />
+  <section>
+    <form @submit.prevent="getWeather">
+      <InputWithIcon
+        :id="'search'"
+        :type="'text'"
+        :placeholder="'Search for a place...'"
+        v-model="location"
+      />
 
-    <Button :type="'submit'" :buttonText="'Search'" />
-  </form>
+      <Button :type="'submit'" :buttonText="'Search'" />
+    </form>
+  </section>
 </template>
