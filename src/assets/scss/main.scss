@@ -3,6 +3,7 @@
 @use 'typography';
 
 @use 'input';
+@use 'select';
 @use 'button';
 @use 'card';
 
@@ -105,6 +106,12 @@ body {
   margin-top: 2rem;
   background-color: $neutral-800;
   padding-right: 0;
+
+  .controls-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .scroll-wrapper {
     max-height: 30em;

@@ -1,0 +1,30 @@
+@use 'variables' as *;
+
+select {
+  appearance: none; /* Most modern browsers */
+  -webkit-appearance: none; /* Safari/Chrome */
+  -moz-appearance: none; /* Firefox */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="white" d="M1.41 0L6 4.58 10.59 0 12 1.41 6 7.41 0 1.41z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 0.65rem auto;
+
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  color: $neutral-0;
+  border: solid 1px $neutral-600;
+  background-color: $neutral-700;
+
+  &::placeholder {
+    color: $neutral-200;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  option {
+    background-color: $neutral-600;
+  }
+}
