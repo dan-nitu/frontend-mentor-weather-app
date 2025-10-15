@@ -52,8 +52,8 @@ const getWeather = async () => {
     const locationData = response.data.results[0]
 
     // Get 'Official' location name
-    weatherData.city = locationData.name
-    weatherData.country = locationData.country
+    weatherData.value.city = locationData.name
+    weatherData.value.country = locationData.country
 
     // Get coordinates
     latitude.value = locationData.latitude
@@ -67,7 +67,7 @@ const getWeather = async () => {
 `)
 
       // Get the today date and format it
-      weatherData.today = new Intl.DateTimeFormat('en-US', {
+      weatherData.value.today = new Intl.DateTimeFormat('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'short',
@@ -75,17 +75,17 @@ const getWeather = async () => {
       }).format(new Date(response.data.daily.time[0]))
 
       const weatherCode = response.data.daily.weathercode[0]
-      weatherData.weatherIcon = weatherCodeMap[weatherCode]
+      weatherData.value.weatherIcon = weatherCodeMap[weatherCode]
 
-      weatherData.temperature = Math.trunc(response.data.daily.temperature_2m_max[0])
+      weatherData.value.temperature = Math.trunc(response.data.daily.temperature_2m_max[0])
 
-      weatherData.feelsLike = Math.trunc(response.data.daily.apparent_temperature_max[0])
-      weatherData.humidity = Math.trunc(response.data.daily.relative_humidity_2m_max[0])
-      weatherData.wind = Math.trunc(response.data.daily.wind_speed_10m_max[0])
-      weatherData.precipitation = Math.trunc(response.data.daily.precipitation_sum[0])
+      weatherData.value.feelsLike = Math.trunc(response.data.daily.apparent_temperature_max[0])
+      weatherData.value.humidity = Math.trunc(response.data.daily.relative_humidity_2m_max[0])
+      weatherData.value.wind = Math.trunc(response.data.daily.wind_speed_10m_max[0])
+      weatherData.value.precipitation = Math.trunc(response.data.daily.precipitation_sum[0])
 
       // Get the data for the daily forecast
-      weatherData.weeklyWeather = response.data.daily.time.map((dateStr, index) => {
+      weatherData.value.weeklyWeather = response.data.daily.time.map((dateStr, index) => {
         const day = new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short' })
 
         return {
@@ -124,13 +124,13 @@ const getWeather = async () => {
         })
       })
 
-      weatherData.hourlyWeather = hourlyDataGroupedByDay
+      weatherData.value.hourlyWeather = hourlyDataGroupedByDay
     } catch (error) {
       console.log(error)
     }
   }
 
-  emit('weatherResult', weatherData)
+  emit('weatherResult', weatherData.value)
 }
 </script>
 

@@ -13,8 +13,6 @@ const weatherData = ref('')
 
 const handleWeatherData = (data) => {
   weatherData.value = data
-  console.log('hourlyWeather')
-  console.log(weatherData)
 }
 </script>
 
