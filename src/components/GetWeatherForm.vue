@@ -44,93 +44,97 @@ const weatherCodeMap = {
   99: 'storm', // Thunderstorm with heavy hail
 }
 
+const getCoordinates = async () => {
+  const response = await axios.get(
+    `https://geocoding-api.open-meteo.com/v1/search?name=${location.value}`,
+  )
+  const data = response.data.results[0]
+
+  latitude.value = data.latitude
+  longitude.value = data.longitude
+
+  return {
+    city: data.name,
+    country: data.country,
+  }
+}
+
+const transformHourlyData = (hourly) => {
+  const groupedData = []
+
+  hourly.time.forEach((hourStr, index) => {
+    const date = new Date(hourStr)
+    const day = date.toLocaleDateString('en-US', { weekday: 'long' })
+
+    let dayGroup = groupedData.find((d) => d.day === day)
+    if (!dayGroup) {
+      dayGroup = { day, hours: [] }
+      groupedData.push(dayGroup)
+    }
+
+    dayGroup.hours.push({
+      hour: date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+      weatherCode: hourly.weathercode[index],
+      weatherIcon: weatherCodeMap[hourly.weathercode[index]],
+      temperature: Math.trunc(hourly.temperature_2m[index]),
+    })
+  })
+
+  return groupedData
+}
+
+const getWeatherForecast = async () => {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,apparent_temperature_max,relative_humidity_2m_max,wind_speed_10m_max&hourly=temperature_2m,weathercode`
+
+  const { data } = await axios.get(url)
+
+  const weatherCode = data.daily.weathercode[0]
+  const todayDate = new Date(data.daily.time[0])
+  const formattedDate = todayDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+
+  const weeklyWeather = data.daily.time.map((dateStr, i) => ({
+    day: new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short' }),
+    weatherCode: data.daily.weathercode[i],
+    weatherIcon: weatherCodeMap[data.daily.weathercode[i]],
+    tempMin: Math.trunc(data.daily.temperature_2m_min[i]),
+    tempMax: Math.trunc(data.daily.temperature_2m_max[i]),
+  }))
+
+  const hourlyWeather = transformHourlyData(data.hourly)
+
+  return {
+    today: formattedDate,
+    weatherIcon: weatherCodeMap[weatherCode],
+    temperature: Math.trunc(data.daily.temperature_2m_max[0]),
+    feelsLike: Math.trunc(data.daily.apparent_temperature_max[0]),
+    humidity: Math.trunc(data.daily.relative_humidity_2m_max[0]),
+    wind: Math.trunc(data.daily.wind_speed_10m_max[0]),
+    precipitation: Math.trunc(data.daily.precipitation_sum[0]),
+    weeklyWeather,
+    hourlyWeather,
+  }
+}
+
 const getWeather = async () => {
   try {
-    const response = await axios.get(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${location.value}`,
-    )
-    const locationData = response.data.results[0]
+    const { city, country } = await getCoordinates()
+    const forecast = await getWeatherForecast()
 
-    // Get 'Official' location name
-    weatherData.value.city = locationData.name
-    weatherData.value.country = locationData.country
-
-    // Get coordinates
-    latitude.value = locationData.latitude
-    longitude.value = locationData.longitude
-  } catch (error) {
-    console.log(error)
-  } finally {
-    try {
-      const response =
-        await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,apparent_temperature_max,relative_humidity_2m_max,wind_speed_10m_max,precipitation_sum&hourly=temperature_2m,weathercode
-`)
-
-      // Get the today date and format it
-      weatherData.value.today = new Intl.DateTimeFormat('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      }).format(new Date(response.data.daily.time[0]))
-
-      const weatherCode = response.data.daily.weathercode[0]
-      weatherData.value.weatherIcon = weatherCodeMap[weatherCode]
-
-      weatherData.value.temperature = Math.trunc(response.data.daily.temperature_2m_max[0])
-
-      weatherData.value.feelsLike = Math.trunc(response.data.daily.apparent_temperature_max[0])
-      weatherData.value.humidity = Math.trunc(response.data.daily.relative_humidity_2m_max[0])
-      weatherData.value.wind = Math.trunc(response.data.daily.wind_speed_10m_max[0])
-      weatherData.value.precipitation = Math.trunc(response.data.daily.precipitation_sum[0])
-
-      // Get the data for the daily forecast
-      weatherData.value.weeklyWeather = response.data.daily.time.map((dateStr, index) => {
-        const day = new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short' })
-
-        return {
-          day,
-          weatherCode: response.data.daily.weathercode[index],
-          weatherIcon: weatherCodeMap[response.data.daily.weathercode[index]],
-          tempMin: Math.trunc(response.data.daily.temperature_2m_min[index]),
-          tempMax: Math.trunc(response.data.daily.temperature_2m_max[index]),
-        }
-      })
-
-      // Get the data for the hourly forecast
-      // Group hourly data by day
-      const hourlyDataGroupedByDay = []
-
-      // Iterate through the hourly data and group it by the day
-      response.data.hourly.time.forEach((hourStr, index) => {
-        const hour = new Date(hourStr)
-        const dayOfWeek = hour.toLocaleDateString('en-US', { weekday: 'long' })
-
-        // Check if this day already exists in the grouped array
-        let dayGroup = hourlyDataGroupedByDay.find((day) => day.day === dayOfWeek)
-        if (!dayGroup) {
-          dayGroup = { day: dayOfWeek, hours: [] }
-          hourlyDataGroupedByDay.push(dayGroup)
-        }
-
-        // Push the hourly forecast into the correct day group
-        const weatherCode = response.data.hourly.weathercode[index]
-        const temperature = Math.trunc(response.data.hourly.temperature_2m[index])
-        dayGroup.hours.push({
-          hour: hour.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
-          weatherCode: weatherCode,
-          weatherIcon: weatherCodeMap[weatherCode],
-          temperature: temperature,
-        })
-      })
-
-      weatherData.value.hourlyWeather = hourlyDataGroupedByDay
-    } catch (error) {
-      console.log(error)
+    const weatherData = {
+      city,
+      country,
+      ...forecast,
     }
-  }
 
-  emit('weatherResult', weatherData.value)
+    emit('weatherResult', weatherData)
+  } catch (error) {
+    console.error('Error fetching weather:', error)
+  }
 }
 </script>
 
