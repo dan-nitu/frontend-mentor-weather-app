@@ -9,4 +9,8 @@ button {
   letter-spacing: 0.5px;
   padding: 14px;
   border-radius: 10px;
+
+  &:disabled {
+    background-color: $neutral-800;
+  }
 }

@@ -7,26 +7,27 @@ import { weatherCodeMap } from '@/utils/weatherCodeMap.js'
 import InputWithIcon from './InputWithIcon.vue'
 import Button from './Button.vue'
 
-const emit = defineEmits()
+const suggestions = ref([])
+const selectedLocation = ref(null)
 
 const location = ref('')
-
 const latitude = ref('')
 const longitude = ref('')
+
+const emit = defineEmits()
 
 const getCoordinates = async () => {
   const response = await axios.get(
     `https://geocoding-api.open-meteo.com/v1/search?name=${location.value}`,
   )
-  const data = response.data.results[0]
 
-  latitude.value = data.latitude
-  longitude.value = data.longitude
+  suggestions.value = response.data.results || []
+}
 
-  return {
-    city: data.name,
-    country: data.country,
-  }
+const selectLocation = (item) => {
+  selectedLocation.value = item
+  location.value = `${item.name}, ${item.country}` // update input
+  suggestions.value = [] // hide suggestions
 }
 
 const transformHourlyData = (hourly) => {
@@ -54,6 +55,12 @@ const transformHourlyData = (hourly) => {
 }
 
 const getWeatherForecast = async () => {
+  const locationData = selectedLocation.value
+  if (!locationData) return
+
+  latitude.value = locationData.latitude
+  longitude.value = locationData.longitude
+
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,apparent_temperature_max,relative_humidity_2m_max,wind_speed_10m_max&hourly=temperature_2m,weathercode`
 
   const { data } = await axios.get(url)
@@ -92,8 +99,14 @@ const getWeatherForecast = async () => {
 
 const getWeather = async () => {
   try {
-    const { city, country } = await getCoordinates()
+    if (!selectedLocation.value) {
+      console.warn('No location selected.')
+      return
+    }
+
     const forecast = await getWeatherForecast()
+
+    const { name: city, country } = selectedLocation.value
 
     const weatherData = {
       city,
@@ -111,14 +124,23 @@ const getWeather = async () => {
 <template>
   <section>
     <form @submit.prevent="getWeather">
-      <InputWithIcon
-        :id="'search'"
-        :type="'text'"
-        :placeholder="'Search for a place...'"
-        v-model="location"
-      />
+      <div class="input-wrapper input-with-suggestions">
+        <InputWithIcon
+          :id="'search'"
+          :type="'text'"
+          :placeholder="'Search for a place...'"
+          v-model="location"
+          @input="getCoordinates"
+        />
 
-      <Button :type="'submit'" :buttonText="'Search'" />
+        <ul v-if="suggestions.length" class="suggestions">
+          <li v-for="(item, index) in suggestions" :key="index" @click="selectLocation(item)">
+            {{ item.name }}, {{ item.admin1 ?? '' }}, {{ item.country }}
+          </li>
+        </ul>
+      </div>
+
+      <Button :type="'submit'" :buttonText="'Search'" :disabled="!selectedLocation" />
     </form>
   </section>
 </template>

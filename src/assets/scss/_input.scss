@@ -1,5 +1,40 @@
 @use 'variables' as *;
 
+.input-wrapper {
+  position: relative;
+}
+
+.input-with-suggestions {
+  ul.suggestions {
+    list-style: none;
+    padding-block: 0.5rem;
+    padding-inline-start: 0;
+    background-color: $neutral-600;
+    margin-top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+
+    position: absolute;
+    top: 100%;
+    height: fit-content;
+    max-height: 250px;
+    overflow: auto;
+    width: calc(100% - 2px);
+    border: solid 1px $neutral-300;
+
+    li {
+      padding-inline: 1rem;
+
+      &:hover {
+        background-color: $neutral-700;
+      }
+    }
+  }
+}
+
 .input-with-icon {
   position: relative;
   display: flex;
