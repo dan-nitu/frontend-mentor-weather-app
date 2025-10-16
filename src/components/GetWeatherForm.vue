@@ -65,6 +65,8 @@ const getWeatherForecast = async () => {
 
   const { data } = await axios.get(url)
 
+  console.log(data)
+
   const weatherCode = data.daily.weathercode[0]
   const todayDate = new Date(data.daily.time[0])
   const formattedDate = todayDate.toLocaleDateString('en-US', {
