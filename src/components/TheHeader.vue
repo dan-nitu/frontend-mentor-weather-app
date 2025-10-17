@@ -17,19 +17,12 @@ const toggleOptions = () => {
 }
 
 const toggleUnits = () => {
-  if (!imperialUnits.value) {
-    temperature.value = 'fahrenheit'
-    windSpeed.value = 'mph'
-    precipitation.value = 'inch'
-    imperialUnits.value = true
-    measurementUnits.value = 'imperial'
-  } else {
-    temperature.value = 'celsius'
-    windSpeed.value = 'kmh'
-    precipitation.value = 'mm'
-    imperialUnits.value = false
-    measurementUnits.value = 'metric'
-  }
+  imperialUnits.value = !imperialUnits.value
+
+  temperature.value = imperialUnits.value ? 'fahrenheit' : 'celsius'
+  windSpeed.value = imperialUnits.value ? 'mph' : 'kmh'
+  precipitation.value = imperialUnits.value ? 'inch' : 'mm'
+  measurementUnits.value = imperialUnits.value ? 'imperial' : 'metric'
 
   emit('measurementUnit', measurementUnits.value)
 }
@@ -42,10 +35,16 @@ const handleClickOutside = (event) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+
+  const handleKeydown = (e) => {
+    if (e.key === 'Escape') showOptions.value = false
+  }
+  document.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('keydown', handleKeydown)
 })
 </script>
 
