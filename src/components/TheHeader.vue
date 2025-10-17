@@ -1,9 +1,10 @@
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, onMounted, onUnmounted } from 'vue'
 
 const emit = defineEmits()
 
 const showOptions = ref(false)
+const optionsRef = ref(null)
 
 const imperialUnits = ref(false)
 const measurementUnits = ref('metric')
@@ -32,6 +33,20 @@ const toggleUnits = () => {
 
   emit('measurementUnit', measurementUnits.value)
 }
+
+const handleClickOutside = (event) => {
+  if (optionsRef.value && !optionsRef.value.contains(event.target)) {
+    showOptions.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
@@ -40,7 +55,7 @@ const toggleUnits = () => {
       <img src="@/assets/images/logo.svg" alt="Logo" />
     </a>
 
-    <div class="toggle-button-wrapper">
+    <div class="toggle-button-wrapper" ref="optionsRef">
       <button class="has-icon cog arrow-down" @click="toggleOptions">Units</button>
 
       <div class="options" v-if="showOptions">
