@@ -104,6 +104,8 @@ const getWeatherForecast = async () => {
     humidity: Math.trunc(data.daily.relative_humidity_2m_max[0]),
     wind: Math.trunc(data.daily.wind_speed_10m_max[0]),
     precipitation: Math.trunc(data.daily.precipitation_sum[0]),
+    windUnit: props.units === 'imperial' ? 'mph' : 'km/h',
+    precipitationUnit: props.units === 'imperial' ? 'inch' : 'mm',
     weeklyWeather,
     hourlyWeather,
   }

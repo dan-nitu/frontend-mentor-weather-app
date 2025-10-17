@@ -43,7 +43,8 @@ const handleWeatherData = (data) => {
         :humidity="weatherData.humidity"
         :wind="weatherData.wind"
         :precipitation="weatherData.precipitation"
-        :units="measurementUnits"
+        :windUnit="weatherData.windUnit"
+        :precipitationUnit="weatherData.precipitationUnit"
       />
 
       <DailyForecast :weeklyWeather="weatherData.weeklyWeather" />
