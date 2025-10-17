@@ -28,25 +28,27 @@ const handleWeatherData = (data) => {
 
   <GetWeatherForm @weatherResult="handleWeatherData" :units="measurementUnits" />
 
-  <template v-if="weatherData">
-    <MainWeatherCard
-      :city="weatherData.city"
-      :country="weatherData.country"
-      :today="weatherData.today"
-      :weatherIcon="weatherData.weatherIcon"
-      :temperature="weatherData.temperature"
-    />
+  <div class="weather-result" v-if="weatherData">
+    <div>
+      <MainWeatherCard
+        :city="weatherData.city"
+        :country="weatherData.country"
+        :today="weatherData.today"
+        :weatherIcon="weatherData.weatherIcon"
+        :temperature="weatherData.temperature"
+      />
 
-    <ExtraDetails
-      :feelsLike="weatherData.feelsLike"
-      :humidity="weatherData.humidity"
-      :wind="weatherData.wind"
-      :precipitation="weatherData.precipitation"
-      :units="measurementUnits"
-    />
+      <ExtraDetails
+        :feelsLike="weatherData.feelsLike"
+        :humidity="weatherData.humidity"
+        :wind="weatherData.wind"
+        :precipitation="weatherData.precipitation"
+        :units="measurementUnits"
+      />
 
-    <DailyForecast :weeklyWeather="weatherData.weeklyWeather" />
+      <DailyForecast :weeklyWeather="weatherData.weeklyWeather" />
+    </div>
 
     <HourlyForecast :hourlyWeather="weatherData.hourlyWeather" />
-  </template>
+  </div>
 </template>

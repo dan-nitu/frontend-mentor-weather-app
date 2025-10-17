@@ -13,6 +13,16 @@ button {
   &:disabled {
     background-color: $neutral-800;
   }
+
+  &[type='submit'] {
+    @media (min-width: 1024px) {
+      max-width: 120px;
+    }
+
+    &:hover {
+      background-color: $blue-700;
+    }
+  }
 }
 
 .toggle-button-wrapper {

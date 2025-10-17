@@ -1,6 +1,8 @@
 @use 'variables' as *;
 
 select {
+  cursor: pointer;
+
   appearance: none; /* Most modern browsers */
   -webkit-appearance: none; /* Safari/Chrome */
   -moz-appearance: none; /* Firefox */

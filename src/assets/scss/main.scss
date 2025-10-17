@@ -21,15 +21,30 @@ html {
 }
 
 body {
-  max-width: 1440px;
+  width: 100%;
+  max-width: 1220px;
   padding: 1rem;
   margin: 0;
+}
+
+.weather-result {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: 2rem;
+  }
 }
 
 .extra-details {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
   > * {
     display: flex;
@@ -47,8 +62,28 @@ body {
 }
 
 .main-results {
+  background-image: url('/src/assets/images/bg-today-small.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  padding: 2rem 1rem;
+
   margin-block: 2rem;
   text-align: center;
+
+  @media (min-width: 1024px) {
+    background-image: url('/src/assets/images/bg-today-large.svg');
+
+    flex-direction: row;
+    text-align: left;
+
+    padding: 5rem 2rem;
+  }
+
+  > div {
+    flex-grow: 1;
+  }
 
   .location {
     font-size: 1.5rem;
@@ -64,6 +99,11 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+
+    @media (min-width: 1024px) {
+      justify-content: end;
+      gap: 2rem;
+    }
 
     img {
       height: 100px;
@@ -86,14 +126,23 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(7, 1fr);
+    }
+
     .card {
       text-align: center;
       padding-inline: 0.5rem;
+
+      @media (min-width: 1024px) {
+        padding-inline: 1rem;
+      }
 
       img {
         margin-block: 0.5rem;
         max-width: 4rem;
         width: 100%;
+        margin: auto;
       }
 
       .temperatures {
@@ -108,6 +157,7 @@ body {
   margin-top: 2rem;
   background-color: $neutral-800;
   padding-right: 0;
+  width: min(calc(100% - 1rem), 400px);
 
   .controls-wrapper {
     display: flex;
@@ -119,6 +169,10 @@ body {
     max-height: 30em;
     overflow: auto;
     padding-right: 1rem;
+
+    @media (min-width: 1024px) {
+      max-height: 35.25em;
+    }
 
     &::-webkit-scrollbar-track {
       background: transparent;
@@ -144,6 +198,7 @@ body {
         background-color: $neutral-700;
 
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
         padding: 0.5rem 1rem 0.5rem 0.5rem;
 
