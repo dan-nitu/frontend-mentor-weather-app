@@ -6,6 +6,7 @@ defineProps({
   humidity: { type: Number, default: '' },
   wind: { type: Number, default: '' },
   precipitation: { type: Number, default: '' },
+  units: String,
 })
 </script>
 
@@ -21,11 +22,11 @@ defineProps({
     </div>
     <div class="card">
       <div class="title">Wind</div>
-      <div class="value">{{ wind }} km/h</div>
+      <div class="value">{{ wind }} {{ units === 'metric' ? 'km/h' : 'mph' }}</div>
     </div>
     <div class="card">
       <div class="title">Precipitation</div>
-      <div class="value">{{ precipitation }} mm</div>
+      <div class="value">{{ precipitation }} {{ units === 'metric' ? 'mm' : 'inch' }}</div>
     </div>
   </section>
 </template>

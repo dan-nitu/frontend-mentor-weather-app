@@ -10,6 +10,11 @@ import DailyForecast from './components/DailyForecast.vue'
 import HourlyForecast from './components/HourlyForecast.vue'
 
 const weatherData = ref('')
+const measurementUnits = ref('metric')
+
+const handleMeasurementUnits = (data) => {
+  measurementUnits.value = data
+}
 
 const handleWeatherData = (data) => {
   weatherData.value = data
@@ -17,11 +22,11 @@ const handleWeatherData = (data) => {
 </script>
 
 <template>
-  <TheHeader />
+  <TheHeader @measurementUnit="handleMeasurementUnits" />
 
   <TheTitle />
 
-  <GetWeatherForm @weatherResult="handleWeatherData" />
+  <GetWeatherForm @weatherResult="handleWeatherData" :units="measurementUnits" />
 
   <template v-if="weatherData">
     <MainWeatherCard
@@ -37,6 +42,7 @@ const handleWeatherData = (data) => {
       :humidity="weatherData.humidity"
       :wind="weatherData.wind"
       :precipitation="weatherData.precipitation"
+      :units="measurementUnits"
     />
 
     <DailyForecast :weeklyWeather="weatherData.weeklyWeather" />

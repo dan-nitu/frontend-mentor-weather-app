@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 import axios from 'axios'
 
 import { weatherCodeMap } from '@/utils/weatherCodeMap.js'
@@ -7,12 +7,18 @@ import { weatherCodeMap } from '@/utils/weatherCodeMap.js'
 import InputWithIcon from './InputWithIcon.vue'
 import Button from './Button.vue'
 
+const props = defineProps({
+  units: String,
+})
+
 const suggestions = ref([])
 const selectedLocation = ref(null)
 
 const location = ref('')
 const latitude = ref('')
 const longitude = ref('')
+
+const unitsModifier = ref('')
 
 const emit = defineEmits()
 
@@ -61,11 +67,15 @@ const getWeatherForecast = async () => {
   latitude.value = locationData.latitude
   longitude.value = locationData.longitude
 
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,apparent_temperature_max,relative_humidity_2m_max,wind_speed_10m_max&hourly=temperature_2m,weathercode`
+  if (props.units === 'imperial') {
+    unitsModifier.value = '&wind_speed_unit=mph&precipitation_unit=inch&temperature_unit=fahrenheit'
+  } else {
+    unitsModifier.value = ''
+  }
+
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,apparent_temperature_max,relative_humidity_2m_max,wind_speed_10m_max&hourly=temperature_2m,weathercode${unitsModifier.value}`
 
   const { data } = await axios.get(url)
-
-  console.log(data)
 
   const weatherCode = data.daily.weathercode[0]
   const todayDate = new Date(data.daily.time[0])

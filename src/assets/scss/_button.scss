@@ -39,11 +39,16 @@ button {
 
     fieldset {
       border: none;
-      padding: 6px;
+      padding: 6px 0;
       margin-block: 0.25rem;
 
       &:not(:first-of-type) {
         border-top: solid 2px $neutral-600;
+      }
+
+      > div {
+        display: flex;
+        flex-direction: column;
       }
 
       span {
@@ -51,6 +56,39 @@ button {
         color: $neutral-300;
         display: block;
         padding-block: 0.25rem;
+        padding-left: 0.5rem;
+      }
+
+      input[type='radio'] {
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+
+        & ~ label {
+          border-radius: 6px;
+          padding: 0.5rem;
+        }
+
+        &:checked {
+          & ~ label {
+            display: flex;
+            position: relative;
+            background-color: $neutral-700;
+
+            &::after {
+              content: '';
+              position: absolute;
+              background-image: url('/src/assets/images/icon-checkmark.svg');
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: 100%;
+              width: 1rem;
+              height: 100%;
+              right: 0.5rem;
+              top: 0;
+            }
+          }
+        }
       }
     }
   }
