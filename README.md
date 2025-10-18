@@ -1,44 +1,29 @@
-# frontend-mentor-weather-app
+# Weather App
 
-This template should help get you started developing with Vue 3 in Vite.
+## Overview
 
-## Recommended IDE Setup
+A weather app built with **Vue 3**, **Vite** and the **Open-Meteo API**. Users can search for a city to get real-time weather info, including temperature, humidity, wind speed, hourly forecast and daily forecast for the week.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Hosted on **Vercel**.
 
-## Recommended Browser Setup
+## Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- Search weather by city
+- View temperature, humidity, wind speed, hourly forecast and daily forecast for the week
+- Responsive design
 
-## Customize configuration
+## Tech Stack
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- **Vue 3** + **Composition API**
+- **Vite**
+- **SCSS**
+- **Open-Meteo API** (no API key required)
 
-## Project Setup
+## Live Demo
 
-```sh
-npm install
-```
+Check out the live app hosted on **Vercel**: [Live Demo](https://frontend-mentor-weather-now-app.vercel.app/)
 
-### Compile and Hot-Reload for Development
+## How to Use
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+1. Type a city name in the search bar.
+2. View current weather details, hourly forecast and daily forecast for the week.
