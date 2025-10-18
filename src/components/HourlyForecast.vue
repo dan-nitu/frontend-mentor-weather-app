@@ -25,10 +25,7 @@ const selectedDate = ref(0)
         <div class="card" v-for="data in hourlyWeather[selectedDate].hours">
           <div>
             <div class="image-wrapper">
-              <img
-                :src="`/src/assets/images/icon-${data.weatherIcon}.webp`"
-                :alt="data.weatherIcon"
-              />
+              <img :src="`/assets/images/icon-${data.weatherIcon}.webp`" :alt="data.weatherIcon" />
             </div>
             <span>{{ data.hour }}</span>
           </div>

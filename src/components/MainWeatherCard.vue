@@ -17,7 +17,7 @@ defineProps({
       <div class="date">{{ today }}</div>
     </div>
     <div class="summary">
-      <img :src="`/src/assets/images/icon-${weatherIcon}.webp`" alt="`${weatherIcon}-icon`" />
+      <img :src="`/assets/images/icon-${weatherIcon}.webp`" alt="`${weatherIcon}-icon`" />
       <div class="temperature">{{ temperature }}°</div>
     </div>
   </section>

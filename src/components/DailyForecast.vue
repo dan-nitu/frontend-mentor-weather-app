@@ -13,7 +13,7 @@ defineProps({
     <div class="cards-wrapper">
       <div class="card" v-for="daily in weeklyWeather" :key="daily.day">
         <div class="day">{{ daily.day }}</div>
-        <img :src="`/src/assets/images/icon-${daily.weatherIcon}.webp`" :alt="daily.weatherIcon" />
+        <img :src="`/assets/images/icon-${daily.weatherIcon}.webp`" :alt="daily.weatherIcon" />
         <div class="temperatures">
           <span>{{ daily.tempMax }}°</span>
           <span>{{ daily.tempMin }}°</span>
