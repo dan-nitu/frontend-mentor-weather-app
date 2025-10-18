@@ -20,6 +20,7 @@ const emit = defineEmits(['update:modelValue'])
       :type="type"
       :placeholder="placeholder"
       :value="modelValue"
+      autocomplete="off"
       @input="$emit('update:modelValue', $event.target.value)"
     />
   </div>
